@@ -1,13 +1,28 @@
 #include <stdio.h>
 #include <string.h>
 #include <cmath>
+
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
 
-// Window dimensions
+#include <glm\glm.hpp>
+#include <glm\gtc\matrix_transform.hpp>
+#include <glm\gtc\type_ptr.hpp>		/*The pointer to the actual location where GLM stores the
+									* values that will be passed to the shader.
+									*/
+
+
+									/* Use the model matrix to covert from local space to world space.
+									* In this case, we will get the same result with the example that using uniform value to
+									* offset position in vertex shader. However, we will use model matrix instead of adding
+									* offset directly in vertex shader vec4 output.
+									*/
+
+
+									// Window dimensions
 const GLint WIDTH = 800, HEIGHT = 600;
 
-GLuint VertexBufferOjbect, VertexArrayObject, shader, uniformXMove;
+GLuint VertexBufferOjbect, VertexArrayObject, shader, uniformModelMatrix;
 
 bool direction = true;
 float triOffset = 0.0f;
@@ -19,10 +34,10 @@ static const char* vertexShader = "	\n\
 #version 330                                                                  \n\
                                                                               \n\
 layout (location = 0) in vec3 pos;											  \n\
-uniform	float xMove;														  \n\
+uniform	mat4 ModelMatrix;														  \n\
 void main()                                                                   \n\
 {                                                                             \n\
-    gl_Position = vec4(0.5*pos.x + xMove, 0.5*pos.y, pos.z, 1.0);			  \n\
+    gl_Position = ModelMatrix * vec4(0.5 * pos.x, 0.5 * pos.y, pos.z, 1.0);			  \n\
 }";
 
 
@@ -79,6 +94,7 @@ int main()
 	glfwMakeContextCurrent(mainWindow);
 
 	// Allow modern extension features, try to access GLEW
+	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK)
 	{
 		printf("GLEW initialization failed!");
@@ -108,7 +124,7 @@ int main()
 		{
 			triOffset -= triIncrement;
 		}
-		if (abs(triOffset)>=triMaxOffset)
+		if (abs(triOffset) >= triMaxOffset)
 		{
 			direction = !direction;
 		}
@@ -117,10 +133,17 @@ int main()
 		glClearColor(1.0f, 0.2f, 0.0f, 1.0f);	// RGBA
 		glClear(GL_COLOR_BUFFER_BIT);	// clear color buffer
 
+		/* Use Shader Start*/
+
 		// To use the one with the ID of the shader.
 		glUseProgram(shader);
 
-		glUniform1f(uniformXMove, triOffset);	// assign uniform value
+		// Compute translation matrix and assign it.
+		glm::mat4 myModelMatrix(1.0f);
+		myModelMatrix = glm::translate(myModelMatrix, glm::vec3(triOffset, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModelMatrix, 1, GL_FALSE, glm::value_ptr(myModelMatrix));
+
+		//glUniform1f(uniformXMove, triOffset);	// assign uniform value
 
 		glBindVertexArray(VertexArrayObject);
 		glDrawArrays(GL_TRIANGLES, 0, 3);	// 0 is the first element of array, 3 means three vertices.
@@ -128,6 +151,8 @@ int main()
 
 		// Unassigns the shader ID.
 		glUseProgram(0);
+
+		/* Use Shader End*/
 
 		glfwSwapBuffers(mainWindow);	// sometimes, it has two or three buffers
 	}
@@ -198,7 +223,9 @@ void CompileShader()
 
 	}
 
+	printf("vertex shader\n");
 	AddShader(shader, vertexShader, GL_VERTEX_SHADER);
+	printf("fragment shader\n");
 	AddShader(shader, fragementShader, GL_FRAGMENT_SHADER);
 
 	GLint result = 0;
@@ -222,5 +249,5 @@ void CompileShader()
 		return;
 	}
 
-	uniformXMove = glGetUniformLocation(shader, "xMove");
+	uniformModelMatrix = glGetUniformLocation(shader, "ModelMatrix");
 }
