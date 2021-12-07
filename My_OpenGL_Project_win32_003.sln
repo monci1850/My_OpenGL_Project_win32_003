@@ -17,6 +17,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Matrix_Transforming_Scaling
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Interpolation and Indexed Draws", "Interpolation and Indexed Draws\Interpolation and Indexed Draws.vcxproj", "{EF57037A-A07B-47C2-BECB-B6A21C609F6C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Projection_Matrix", "Projection_Matrix\Projection_Matrix.vcxproj", "{3C117380-A97E-47D8-B9E4-B732488EED83}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -81,6 +83,14 @@ Global
 		{EF57037A-A07B-47C2-BECB-B6A21C609F6C}.Release|x64.Build.0 = Release|x64
 		{EF57037A-A07B-47C2-BECB-B6A21C609F6C}.Release|x86.ActiveCfg = Release|Win32
 		{EF57037A-A07B-47C2-BECB-B6A21C609F6C}.Release|x86.Build.0 = Release|Win32
+		{3C117380-A97E-47D8-B9E4-B732488EED83}.Debug|x64.ActiveCfg = Debug|x64
+		{3C117380-A97E-47D8-B9E4-B732488EED83}.Debug|x64.Build.0 = Debug|x64
+		{3C117380-A97E-47D8-B9E4-B732488EED83}.Debug|x86.ActiveCfg = Debug|Win32
+		{3C117380-A97E-47D8-B9E4-B732488EED83}.Debug|x86.Build.0 = Debug|Win32
+		{3C117380-A97E-47D8-B9E4-B732488EED83}.Release|x64.ActiveCfg = Release|x64
+		{3C117380-A97E-47D8-B9E4-B732488EED83}.Release|x64.Build.0 = Release|x64
+		{3C117380-A97E-47D8-B9E4-B732488EED83}.Release|x86.ActiveCfg = Release|Win32
+		{3C117380-A97E-47D8-B9E4-B732488EED83}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
