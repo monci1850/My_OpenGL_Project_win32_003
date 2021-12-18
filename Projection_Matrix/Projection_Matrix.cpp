@@ -1,6 +1,6 @@
 /* This project is to test the projection matrix.
 * Q:? How to use time module to check the meaning of 
-* "glm::mat4 myProjectionMatrixValue = glm::perspective(glm::radians(70.0f),... "
+* "glm::mat4 myProjectionMatrixValue = glm::perspective(glm::radians(70.0f), "
 */
 #include <stdio.h>
 #include <string.h>
@@ -108,7 +108,7 @@ int main()
 
 	// Get Buffer Size information, this is actually not necessary for showing up the window.
 	int bufferWidth, bufferHeight;
-	glfwGetFramebufferSize(mainWindow, &bufferWidth, &bufferHeight);	// use reference to put values in.
+	glfwGetFramebufferSize(mainWindow, &bufferWidth, &bufferHeight);	// passing in pointers
 
 	// Set context for GLEW to use. 
 	glfwMakeContextCurrent(mainWindow);
@@ -191,7 +191,7 @@ int main()
 
 		// Compute translation and rotation matrix and assign it.
 		glm::mat4 myModelMatrixValue(1.0f);
-		myModelMatrixValue = glm::translate(myModelMatrixValue, glm::vec3(0.0f, -0.0f, -3.f));
+		myModelMatrixValue = glm::translate(myModelMatrixValue, glm::vec3(0.0f, 0.0f, -3.f));
 		//myModelMatrixValue = glm::rotate(myModelMatrixValue, currentAngle * toRadians1Degree,
 		//				glm::vec3(0.f, 1.f, 0.f));
 		myModelMatrixValue = glm::scale(myModelMatrixValue, glm::vec3(0.4f, 0.4f, 1.f));
